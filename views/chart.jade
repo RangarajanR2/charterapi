@@ -41,7 +41,7 @@ html
       }
       });
       $(document).ready(function(){
-        if(!window.location.host.contains("botplatform")){
+        if(window.location.host.indexOf("botplatform") == -1){
             $("#button").hide();
         }
       })
