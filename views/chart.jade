@@ -1,15 +1,36 @@
 html
   head
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    |     
     script(src='https://code.jquery.com/jquery-3.3.1.min.js')
     |             
+    |     
     script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js')
   |     
+  |   
   body
-    input#chartId(type='hidden', value="#{chartId}")
+    input#chartId(value='#{chartId}', type='hidden')
+    |     
     |     
     canvas#chart
+    |   
+    |     
+    div
+      button.col-md-4.col-md-offset-4.btn.btn-primary.btn-md(onclick='fs()') View in full screen
     |     
     script.
+      function fs(){
+      window.parent.postMessage(JSON.stringify({event_code:'ym-client-event', data: JSON.stringify({
+                            event: {
+                                code: "redirect",
+                                data: {
+                                    url : "https://charterapi.herokuapp.com/charts/chart/"+$('#chartId').val()
+                                }
+                            }
+                        })}), 'https://chat.botplatform.io');
+
+
+      }
       $.ajax({
       url:'/charts/data/'+$('#chartId').val(),
       method:'post',
