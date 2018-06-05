@@ -15,11 +15,8 @@ function connect(callback, callbackParams){
 MongoClient.connect(url, function(err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
-    console.log(client);
     const db = client.db(dbName);
-    console.log(db);
     callback.call(db, callbackParams);
-   
     client.close();
   });
 }
@@ -28,9 +25,7 @@ function add(collectionName, data){
     return new Promise(function(resolve){
         return MongoClient.connect(url).then( (client) => {
                 console.log("Connected successfully to server");
-                console.log(client);
                 const db = client.db(dbName);
-                console.log(db);
                 let collection = db.collection(collectionName);
                 return collection.insert(data).then( (result) => {
                     client.close();
@@ -48,9 +43,7 @@ function findOne(collectionName, data){
     return new Promise(function(resolve){
         MongoClient.connect(url).then( (client) => {
             console.log("Connected successfully to server");
-            console.log(client);
             const db = client.db(dbName);
-            console.log(db);
             let collection = db.collection(collectionName);
             return collection.findOne(data).then( (docs) => {
                 client.close();

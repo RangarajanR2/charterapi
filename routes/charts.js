@@ -16,12 +16,16 @@ router.get('/chart/:chartId', function (req, res, next) {
 
 router.post('/newChart', function (req, res, next) {
     let chart = req.body.chart;
-    let chartType = chart.type;
-    let config = chart.config;
+    chart.uniqId = id();
+    console.log(chart);
+    // let chartType = chart.type;
+    // let config = chart.config;
     //Do something
-    let data = mongo.add('chartData', chart);
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(data.ops[0].uniqId));
+    mongo.add('chartData', chart).then( (data) => {
+        console.log(data);
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(data.ops[0].uniqId));
+    })
 });
 
 router.post('/data/:chartId', function (req, res, next) {
