@@ -1,0 +1,20 @@
+html
+  head
+    script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+    |             
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js')
+  |     
+  body
+    input#chartId(type='hidden', value="#{chartId}")
+    |     
+    canvas#chart
+    |     
+    script.
+      $.ajax({
+      url:'/charts/data/'+$('#chartId').val(),
+      method:'post',
+      success:function(response){
+      var ctx = document.getElementById("chart").getContext(response.context);
+      var myChart = new Chart(ctx, response.config);
+      }
+      });
