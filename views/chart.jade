@@ -20,14 +20,15 @@ html
     |     
     script.
       function fs(){
-      window.parent.postMessage(JSON.stringify({event_code:'ym-client-event', data: JSON.stringify({
-                            event: {
-                                code: "redirect",
-                                data: {
-                                    url : "https://charterapi.herokuapp.com/charts/chart/"+$('#chartId').val()
-                                }
-                            }
-                        })}), 'https://chat.botplatform.io');
+        window.open("https://charterapi.herokuapp.com/charts/chart/"+$('#chartId').val(), '_blank')
+      //- window.parent.postMessage(JSON.stringify({event_code:'ym-client-event', data: JSON.stringify({
+      //-                       event: {
+      //-                           code: "redirect",
+      //-                           data: {
+      //-                               url : "https://charterapi.herokuapp.com/charts/chart/"+$('#chartId').val()
+      //-                           }
+      //-                       }
+      //-                   })}), 'https://chat.botplatform.io');
 
 
       }
