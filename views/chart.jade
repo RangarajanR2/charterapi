@@ -16,7 +16,7 @@ html
     |   
     |     
     div
-      button.col-md-4.col-md-offset-4.btn.btn-primary.btn-md(onclick='fs()') View in full screen
+      button#button.col-xs-6.col-xs-offset-3.btn.btn-primary.btn-xs(onclick='fs()') View in full screen
     |     
     script.
       function fs(){
@@ -40,3 +40,8 @@ html
       var myChart = new Chart(ctx, response.config);
       }
       });
+      $(document).ready(function(){
+        if(!window.url.contains("botplatform")){
+            $("#button").hide();
+        }
+      })
