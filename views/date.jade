@@ -1,0 +1,34 @@
+<<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Document
+        script(type='text/javascript', src='https://cdn.jsdelivr.net/jquery/latest/jquery.min.js')
+    script(type='text/javascript', src='https://cdn.jsdelivr.net/momentjs/latest/moment.min.js')
+    script(type='text/javascript', src='https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js')
+    link(rel='stylesheet', type='text/css', href='https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css')
+    body
+    input(type='text', name='daterange', value='01/01/2018 - 01/15/2018')
+    script.
+      $(function() {
+      $('input[name="daterange"]').daterangepicker(#options, function(start, end, label) {
+            window.parent.postMessage(JSON.stringify({event_code:'ym-client-event', data: JSON.stringify({
+                            event: {
+                                code: "dateRange",
+                                data: {
+                                    start: start.format('DD-MM-YYYY'),
+                                    end: end.format('DD-MM-YYYY')
+                                }
+                            }
+                        })}), 'https://chat.botplatform.io');
+
+
+
+      console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      });
+      });
+
+   
+    
