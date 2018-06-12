@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 html(lang="en")
     head
         meta(charset="UTF-8")
@@ -11,9 +11,10 @@ html(lang="en")
     link(rel='stylesheet', type='text/css', href='https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css')
     body
     input(type='text', name='daterange', value='01/01/2018 - 01/15/2018')
+    textarea#json(name="json",hidden="true", cols="30", rows="10", value="#{param}")
     script.
       $(function() {
-      $('input[name="daterange"]').daterangepicker(#options, function(start, end, label) {
+      $('input[name="daterange"]').daterangepicker(!{JSON.stringify(param)}, function(start, end, label) {
             window.parent.postMessage(JSON.stringify({event_code:'ym-client-event', data: JSON.stringify({
                             event: {
                                 code: "dateRange",

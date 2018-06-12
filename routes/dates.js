@@ -4,7 +4,8 @@ var mongo = require('../db/mongo');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('date',{options:req.params});
+    // console.log({param:req});
+    res.render('date',{param:req.query});
 });
 
 module.exports = router;
