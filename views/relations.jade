@@ -1,0 +1,139 @@
+doctype html
+html(lang='en')
+  head
+    title Bajaj Sales bot
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+    link(rel='stylesheet', href='/resources/demos/style.css')
+    script(src='https://code.jquery.com/jquery-1.12.4.js')
+    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
+    style.
+      .dimen {
+      width: 100%;
+      height: 35px;
+      font-size: 15px;
+      padding: 5px;
+      }
+      .small {
+      font-size: 9px;
+      height:25px
+      }
+      .padding_new{
+      padding:0px
+      }
+    script(type='text/javascript').
+      var getUrlParameter = function getUrlParameter(sParam) {
+      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+      for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+      if (sParameterName[0] === sParam) {
+      return sParameterName[1] === undefined ? true : sParameterName[1];
+      }
+      }
+      };
+      $(document).ready(function () {
+      $("#dob" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '1910:2018'
+      });
+      var counter = 0;
+      $("#addrow").on("click", function () {
+      var newRow = $("<tr>");
+      var cols = "";
+      cols += `<td><select class="form-control selectpicker" id="relation${counter}" name="relation${counter}">
+      <option>Choose..</option>
+      <option>Self</option>
+      <option>Spouse</option>
+      <option>Child</option>
+      </select></td>`;
+      cols += `<td><input type="text" class="form-control" id="dob${counter}" name="dob${counter}"/></td>`;
+      cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger"  value="X"></td>';
+      newRow.append(cols);
+      $("#myTable").append(newRow);
+      $(`#dob${counter}`).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '1910:2018'
+      });
+      counter++;
+      window.parent.postMessage(JSON.stringify({
+      "code": "webview-resize",
+      data: { id : getUrlParameter("frameId"), height: $(document).height() }
+      }), "*");
+      });
+      //ON SUBMIT
+      $("#submit").click(function(){
+      if($("#relation").val() && $("#dob").val()){
+      var relations = [{
+      relation:$("#relation").val(),
+      dob:$("#dob").val()
+      }];
+      for (var i = 0; i < counter; i++) {
+      relations.push({
+      relation: $("#relation" + i).val(),
+      dob: $("#dob" + i).val()
+      })
+      }
+      //console.log(JSON.stringify(relations),"RELATIONS");
+      window.parent.postMessage(JSON.stringify({event_code:'ym-client-event', data: JSON.stringify({
+      event: {
+      code: "relations",
+      data: JSON.stringify(relations)
+      }
+      })}), 'https://chat.botplatform.io');
+      $('#custom :input').attr('disabled', 'disabled');
+      $('#custom').fadeTo( "slow", 0.15, function() {
+      $(this).find(':input').attr('disabled', 'disabled');
+      $(this).find('label').css('cursor','default');
+      $('#add').append('Submitted');
+      });
+      }else{
+      alert("Please enter atleast data for atleast one relation");
+      }
+      });
+      $("table.order-list").on("click", ".ibtnDel", function (event) {
+      $(this).closest("tr").remove();
+      counter -= 1
+      });
+      });
+  body(style='background: #EAF2F7;')
+    #custom.container(style='padding: 0;')
+      table#myTable.table.order-list
+        thead
+          tr
+            td
+              strong Relation
+            td
+              strong DOB
+        tbody
+          tr
+            td.col-sm-6
+              // <input type="text" name="relation" class="form-control" />
+              select#relation.form-control.selectpicker(name='relation')
+                option Choose..
+                option Self
+                option Spouse
+                option Child
+            td.col-sm-6
+              input#dob.form-control(type='text', name='dob')
+            td.col-sm-2
+              a.deleteRow
+        tfoot
+          tr
+            td(colspan='5', style='text-align: left;')
+              input#addrow.btn.btn-lg.btn-block.btn-primary.dimen(type='button', value='Add Row')
+          tr
+            td(colspan='5', style='text-align: left;')
+              input#submit.btn.btn-lg.btn-block.btn-success.dimen(type='button', value='Submit')
+          tr
+    center
+      strong
+        ul#add
