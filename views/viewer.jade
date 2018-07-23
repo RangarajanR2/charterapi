@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="jquery.zohoviewer.min.js"></script>
+</head>
+<body>
+<div id="div"></div>
+<!-- <a href="https://bpvault.blob.core.windows.net/bagic/hr_policies/Q7%20Policy%20on%20Brokerage%20Reimbursement.pdf" class="embed">Download file</a> -->
+
+</body>
+<script type="text/javascript">
+	function getObject(pathString){
+		console.log(pathString)
+		var paramPair = pathString.split('&');
+		var obj = {};
+		for(var pairKey in paramPair){
+			var pair = paramPair[pairKey];
+			obj[pair.split('=')[0]] = pair.split('=')[1];
+		}
+		console.log(obj.pol)
+		return obj;
+	}
+	(function(){
+		console.log(window.location);
+		try{
+			var strt = window.location.href.split('?');
+		if(strt.length== 2){
+			var searchPath = strt[1];
+			var polLink = getObject(searchPath)['pol'];
+			console.log(polLink)
+			$('body').append($('<embed src='+polLink+'#toolbar=0&navpanes=0&scrollbar=0	class="doc">'))
+			
+		}
+		}catch(e){
+			console.log(e)
+		}
+	})();
+</script>
+</html>
