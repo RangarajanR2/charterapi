@@ -14,6 +14,12 @@ html
       body {
       height: 100%
       }
+      .toolbar {
+      display: none !important; /* hide PDF viewer toolbar */
+      }
+      #outerContainer #mainContainer #viewerContainer {
+      top: 0 !important; /* move doc up into empty bar space */
+      }
       .container-fluid {
       margin: 0 auto;
       height: 100%;
