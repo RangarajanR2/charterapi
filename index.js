@@ -5,6 +5,8 @@ let helper = require('sendgrid').mail;
 let sg = require('sendgrid')(sendgrid_key);
 let axios = require('axios');
 let querystring = require('querystring');
+// let dateTime = require('time');
+var moment = require('moment');
 
 let to = ["Mohsin.Ansari@tataaig.com"]
 let cc = ["Rajkumar.Erra@tataaig.com","Ajayreddy.Dubbaka@tataaig.com","priti.gupta@tataaig.com","rangarajan@yellowmessenger.com", "Praful.Bhargava@tataaig.com"]
@@ -65,19 +67,20 @@ let sendEmailBeta = function(email){
 };
  
 let prevHourCalc = function(){
-    let time = new Date();
+    let time = new Date(moment().tz("Asia/Calcutta").format());
+    
     return new Date(time.getFullYear(), time.getMonth(), time.getDate() , time.getHours()-1, time.getMinutes(), time.getSeconds(), time.getMilliseconds())
 }
 
 let nextHourCalc = function(){
     console.log(new Date());
-    let time = new Date();
+    let time = new Date(moment().tz("Asia/Calcutta").format());
     return new Date(time.getFullYear(), time.getMonth(), time.getDate() , time.getHours()+1, 0, 0, 0) - time;
 }
 
 let nextHour = nextHourCalc();
 
-console.log(nextHour);
+console.log("next hour : "+nextHour);
 
 setTimeout(function(){
 
@@ -85,7 +88,7 @@ setTimeout(function(){
         let currentHour = new Date();
         // let x-auth-token
         let prevHour = prevHourCalc();
-        
+        console.log(prevHour);
         let html = "Hi, <br><br>";
         let tables = ["policy_wordings", "policy_brochures"];
         
