@@ -76,6 +76,7 @@ let prevHourCalc = function(){
 let nextHourCalc = function(){
     console.log(new Date());
     let time = new Date();
+    console.log(time.toLocaleTimeString());
     time = new Date(time + time.getTimezoneOffset());
     return new Date(time.getFullYear(), time.getMonth(), time.getDate() , time.getHours()+1, 0, 0, 0) - time;
 }
