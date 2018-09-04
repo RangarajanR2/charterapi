@@ -6,7 +6,7 @@ let sg = require('sendgrid')(sendgrid_key);
 let axios = require('axios');
 let querystring = require('querystring');
 // let dateTime = require('time');
-var moment = require('moment');
+var moment = require('moment-timezone');
 
 let to = ["Mohsin.Ansari@tataaig.com"]
 let cc = ["Rajkumar.Erra@tataaig.com","Ajayreddy.Dubbaka@tataaig.com","priti.gupta@tataaig.com","rangarajan@yellowmessenger.com", "Praful.Bhargava@tataaig.com"]
