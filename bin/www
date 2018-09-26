@@ -8,9 +8,6 @@ var app = require('../app');
 var debug = require('debug')('charterapi:server');
 var http = require('http');
 
-var mailer = require('../index');
-mailer();
-
 /**
  * Get port from environment and store in Express.
  */
